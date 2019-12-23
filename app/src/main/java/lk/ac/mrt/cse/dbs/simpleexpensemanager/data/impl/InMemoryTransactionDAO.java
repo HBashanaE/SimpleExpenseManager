@@ -28,25 +28,25 @@ import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Transaction;
  * This is an In-Memory implementation of TransactionDAO interface. This is not a persistent storage. All the
  * transaction logs are stored in a LinkedList in memory.
  */
-public class InMemoryTransactionDAO implements TransactionDAO {
+public class InMemoryTransactionDAO /*implements TransactionDAO */{
     private final List<Transaction> transactions;
 
     public InMemoryTransactionDAO() {
         transactions = new LinkedList<>();
     }
 
-    @Override
+//    @Override
     public void logTransaction(Date date, String accountNo, ExpenseType expenseType, double amount) {
         Transaction transaction = new Transaction(date, accountNo, expenseType, amount);
         transactions.add(transaction);
     }
 
-    @Override
+//    @Override
     public List<Transaction> getAllTransactionLogs() {
         return transactions;
     }
 
-    @Override
+//    @Override
     public List<Transaction> getPaginatedTransactionLogs(int limit) {
         int size = transactions.size();
         if (size <= limit) {

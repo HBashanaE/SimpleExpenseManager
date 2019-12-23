@@ -4,9 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.DatabaseManager;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.AccountDAO;
@@ -27,8 +25,11 @@ public class PersistentAccountDAO implements AccountDAO {
     public List<String> getAccountNumbersList() {
         List<String> accountNumbers = new ArrayList<>();
         Cursor accountCursor = dbManager.fetchAccountData();
+        if (accountCursor != null) {
+            accountCursor.moveToFirst();
+        }
         while (accountCursor.moveToNext()) {
-            String accNo = String.valueOf(accountCursor.getInt(0));
+            String accNo = accountCursor.getString(0);
             accountNumbers.add(accNo);
         }
         return accountNumbers;
@@ -42,7 +43,7 @@ public class PersistentAccountDAO implements AccountDAO {
             accountCursor.moveToFirst();
         }
         while (accountCursor.moveToNext()) {
-            String accNo = String.valueOf(accountCursor.getInt(0));
+            String accNo = accountCursor.getString(0);
             String bankName = accountCursor.getString(1);
             String accHolder = accountCursor.getString(2);
             double balance = accountCursor.getDouble(3);
@@ -58,7 +59,7 @@ public class PersistentAccountDAO implements AccountDAO {
         if (accountCursor != null) {
             accountCursor.moveToFirst();
         }
-        String accNo = String.valueOf(accountCursor.getInt(0));
+        String accNo = accountCursor.getString(0);
         String bankName = accountCursor.getString(1);
         String accHolder = accountCursor.getString(2);
         double balance = accountCursor.getDouble(3);

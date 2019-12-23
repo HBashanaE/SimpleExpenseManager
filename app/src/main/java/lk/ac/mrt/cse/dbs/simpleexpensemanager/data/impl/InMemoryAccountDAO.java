@@ -30,24 +30,24 @@ import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
  * This is an In-Memory implementation of the AccountDAO interface. This is not a persistent storage. A HashMap is
  * used to store the account details temporarily in the memory.
  */
-public class InMemoryAccountDAO implements AccountDAO {
+public class InMemoryAccountDAO /*implements AccountDAO */{
     private final Map<String, Account> accounts;
 
     public InMemoryAccountDAO() {
         this.accounts = new HashMap<>();
     }
 
-    @Override
+//    @Override
     public List<String> getAccountNumbersList() {
         return new ArrayList<>(accounts.keySet());
     }
 
-    @Override
+//    @Override
     public List<Account> getAccountsList() {
         return new ArrayList<>(accounts.values());
     }
 
-    @Override
+//    @Override
     public Account getAccount(String accountNo) throws InvalidAccountException {
         if (accounts.containsKey(accountNo)) {
             return accounts.get(accountNo);
@@ -56,12 +56,12 @@ public class InMemoryAccountDAO implements AccountDAO {
         throw new InvalidAccountException(msg);
     }
 
-    @Override
+//    @Override
     public void addAccount(Account account) {
         accounts.put(account.getAccountNo(), account);
     }
 
-    @Override
+//    @Override
     public void removeAccount(String accountNo) throws InvalidAccountException {
         if (!accounts.containsKey(accountNo)) {
             String msg = "Account " + accountNo + " is invalid.";
@@ -70,7 +70,7 @@ public class InMemoryAccountDAO implements AccountDAO {
         accounts.remove(accountNo);
     }
 
-    @Override
+//    @Override
     public void updateBalance(String accountNo, ExpenseType expenseType, double amount) throws InvalidAccountException {
         if (!accounts.containsKey(accountNo)) {
             String msg = "Account " + accountNo + " is invalid.";

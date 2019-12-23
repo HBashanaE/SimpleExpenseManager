@@ -3,7 +3,6 @@ package lk.ac.mrt.cse.dbs.simpleexpensemanager;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -13,17 +12,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_ACCOUNT_TABLE = "CREATE TABLE " +
             "account ( " +
-            "accountNo INTEGER PRIMARY KEY, " +
-            "bankName VARCHAR(255) NOT NULL, " +
-            "accountHolderName VARCHAR(255) NOT NULL, " +
-            "balance NUMERIC(20,2) NOT NULL);";
+            "accountNo VARCHAR PRIMARY KEY, " +
+            "bankName VARCHAR NOT NULL, " +
+            "accountHolderName VARCHAR NOT NULL, " +
+            "balance NUMERIC NOT NULL);";
 
     private static final String CREATE_TRANSACTION_TABLE = "CREATE TABLE " +
-            "`transaction` ( " +
-            "date VARCHAR(10) NOT NULL, " +
-            "accountNo INTEGER NOT NULL, " +
-            "expenseType VARCHAR(7) NOT NULL, " +
-            "amount NUMERIC(20,2) NOT NULL, " +
+            "transactions ( " +
+            "date VARCHAR NOT NULL, " +
+            "accountNo VARCHAR NOT NULL, " +
+            "expenseType VARCHAR NOT NULL, " +
+            "amount NUMERIC NOT NULL, " +
             "FOREIGN KEY (accountNo) REFERENCES account(accountNo));";
 
     public DatabaseHelper(Context context ) {
@@ -39,6 +38,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS account");
-        db.execSQL("DROP TABLE IF EXISTS `transaction`");
+        db.execSQL("DROP TABLE IF EXISTS transactions");
+
+        onCreate(db);
     }
 }
