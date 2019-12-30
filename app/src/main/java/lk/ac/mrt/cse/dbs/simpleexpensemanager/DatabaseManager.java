@@ -86,6 +86,20 @@ public class DatabaseManager {
     }
 
     public void updateBalance(String accNo, ExpenseType type, double amount) {
-
+        if (!fetchAccountDataByAccNo(accNo)) {
+            String msg = "Account " + accountNo + " is invalid.";
+            throw new InvalidAccountException(msg);
+        }
+        Account account = fetchAccountDataByAccNo(accNo);
+        
+        switch (expenseType) {
+            case EXPENSE:
+                query = "UPDATE ACCOUNT SET balance = balance - ? WHERE accountNo = ?";
+                break;
+            case INCOME:
+                query = "UPDATE ACCOUNT SET balance = balance + ? WHERE accountNo = ?";
+                break;
+        }
+        db.execSQL(query, new Object[]{amount,accountNo});
     }
 }
