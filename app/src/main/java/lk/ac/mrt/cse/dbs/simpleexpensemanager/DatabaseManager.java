@@ -1,7 +1,7 @@
 package lk.ac.mrt.cse.dbs.simpleexpensemanager;
 
 import android.content.ContentValues;
-import android.content.Context;
+import android.content.Context; 
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -73,5 +73,19 @@ public class DatabaseManager {
         database = dbHelper.getReadableDatabase();
         Cursor cursor = database.query("transactions",new String [] {"date", "accountNo", "expenseType","amount"}, null, null,null, null, null, limit);
         return cursor;
+    }
+
+    public void deleteAccount(String accNo) throws InvalidAccountException {
+        Cursor cursor = database.rawQuery("SELECT * from account WHERE accountNo = ?;", new String[]{accNo});
+        if (cursor.moveToFirst()) {
+            database.delete(account, "accountNo = ?", new String[]{accountNo});
+        } else {
+            throw new InvalidAccountException("Invalid account Number");
+        }
+        cursor.close();
+    }
+
+    public void updateBalance(String accNo, ExpenseType type, double amount) {
+
     }
 }
