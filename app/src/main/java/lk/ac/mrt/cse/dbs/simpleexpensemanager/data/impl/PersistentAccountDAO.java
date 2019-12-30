@@ -74,7 +74,7 @@ public class PersistentAccountDAO implements AccountDAO {
 
     @Override
     public void removeAccount(String accountNo) throws InvalidAccountException {
-
+        dbManager.deleteAccount(accountNo);
     }
 
     @Override
